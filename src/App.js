@@ -18,39 +18,52 @@ function App() {
   const [showBtnUp, setShowBtnUp] = useState(false);
 
   useEffect(() => {
+    // Define the event handler function
     function handleScroll() {
-      if (window.pageYOffset > 100) {
-        setShowBtnUp(true);
-      } else {
-        setShowBtnUp(false);
-      }
+      // Check if the vertical scroll position is greater than 100 pixels
+      setShowBtnUp(window.pageYOffset > 100);
     }
+
+    // Add event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
+
+    // Clean up by removing the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-console.log(userInfo,'userInfo')
+  console.log(userInfo, 'userInfo')
   let whetherApply = userInfo && userInfo?.whetherApply;
+  console.log('whetherApply...', whetherApply);
   // let stage = userInfo && userInfo?.stage;
-  let stage=1
+  let stage = 1;
   let level = userInfo && userInfo?.level;
   let isPoster = userInfo && userInfo?.havePoster;
+  console.log('leve...???', level);
+  console.log('isPoster...', isPoster);
+
+  const handleScrollToTop = () => {
+    console.log('clicked this funtions...');
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="App">
       <span id="extraContent"></span>
       <img className="header" src={header} alt="" />
+
       {stage === 1 ? (
         <Register whetherApply={whetherApply} isPoster={isPoster} level={level} />
-      ) : stage === 2 ? (
+      ) : stage === 2 && (
         <TabButtons tab1={tab1} settab1={settab1} tab2={tab2} settab2={settab2} tab3={tab3} settab3={settab3} />
-      ) : null}
+      )}
 
       {showBtnUp && (
-        <button className="btn-up" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+        <button className="btn-up" onClick={handleScrollToTop}>
           <img src={upBtn} alt="" />
         </button>
       )}
+
       <Footer />
       <LanguageBar setLanguage={setLanguage} language={language} />
       <Guide language={language} />

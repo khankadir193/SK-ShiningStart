@@ -54,22 +54,27 @@ function Register({ whetherApply, level, isPoster }) {
                 ) : whetherApply === 1 && level <= 5 ? (
                   <div className="d-flex fd-column jc-center al-center">
                     Congratulations! Your application <br /> has been selected in the{" "}
-                    {level == 1 ? (
-                      <span className="c-blue fw-bold">S</span>
-                    ) : level == 2 ? (
-                      <span className="c-blue fw-bold">A</span>
-                    ) : level == 3 ? (
-                      <span className="c-blue fw-bold">B</span>
-                    ) : level == 4 ? (
-                      <span className="c-blue fw-bold">C</span>
-                    ) : level == 5 ? (
-                      <span className="c-blue fw-bold">Rejected</span>
-                    ) : (
-                      <span className="c-blue fw-bold">Not Categorized</span>
-                    )}
-                    category. Don't forget to <br /> complete DAILY TASKS to <br /> earn extra rewards
+                    <span className="c-blue fw-bold">
+                      {(() => {
+                        switch (level) {
+                          case 1:
+                            return "S";
+                          case 2:
+                            return "A";
+                          case 3:
+                            return "B";
+                          case 4:
+                            return "C";
+                          case 5:
+                            return "Rejected";
+                          default:
+                            return "Not Categorized";
+                        }
+                      })()}
+                    </span> category. Don't forget to <br /> complete DAILY TASKS to <br /> earn extra rewards
                     <br /> during event time.
                   </div>
+
                 ) : whetherApply === 1 && level === 5 ? (
                   <>
                     Your aplication has <br /> been rejected.
@@ -84,7 +89,7 @@ function Register({ whetherApply, level, isPoster }) {
               </div>
             </div>
           </div>
-          {whetherApply === 1 ? null : (
+          {whetherApply !== 1 && (
             <button className="reg-btn" onClick={registerFunc}>
               <img src={reg_btn} alt="" />
             </button>
